@@ -5,6 +5,13 @@
  * -> <script type="module" src="js/inicio.js" defer></script>
  */
 window.addEventListener('load', function(){
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const mensajeCierre = urlParams.get('mensajeCierre');
+
+    if (mensajeCierre) {
+        mostrarAlerta(mensajeCierre);
+    }
     
     // referenciar controles del formulario
     const tipoDocumento = this.document.getElementById('tipoDocumento');
@@ -70,6 +77,8 @@ async function autenticar() {
 
         if(result.codigo === '00') {
             localStorage.setItem('result', JSON.stringify(result));
+            localStorage.setItem('tipoDocumento', tipoDocumento.value);
+            localStorage.setItem('numeroDocumento', numeroDocumento.value);
             window.location.replace('principal.html');
         } else {
             mostrarAlerta(result.mensaje);
